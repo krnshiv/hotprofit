@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-
+import django_heroku
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -141,3 +141,5 @@ from django.contrib.messages import constants as messages
 MESSAGE_TAGS ={
     messages.ERROR: "DANGER"
 }
+
+django_heroku.settings(locals())
