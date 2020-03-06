@@ -23,7 +23,7 @@ def login(request):
         return render(request, 'accounts/login.html')
 
 def register(request):
-    print(request)
+    print(Group.objects.get())
     context = {
         'price_choices':price_choices,
         'state_choices':state_choices,
@@ -46,6 +46,8 @@ def register(request):
         zipcode = request.POST['zipcode']
         description = request.POST['description']
         group = Group.objects.get(name='merchants')
+        print(group)
+        print('11')
         is_staff = True
         
         if password == password2:
@@ -59,7 +61,8 @@ def register(request):
                 else:
                     user = User.objects.create_user(username=username, password=password, email=email, first_name=first_name,is_staff=is_staff)
                     user.save()
-                    user.groups.add(group)
+                    if group:
+                        user.groups.add(group)
                     m = Merchant(name=first_name,photo=photo,email=email,city=city,state=state,sublocality=sublocality_choices[sublocality],phone=phone,zipcode=zipcode,description=description)
                     m.save()
                     
