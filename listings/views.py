@@ -24,49 +24,40 @@ def listing(request, listing_id):
     return render(request, 'listings/listing.html',context)
 
 def search(request):
+    print(request.GET)
     queryset_list = Listing.objects.order_by('-posted')
 
     if 'keywords' in request.GET:
         keywords = request.GET['keywords']
         print(keywords)
         if keywords:
-            queryset_list = queryset_list.filter(name__icontains=keywords)
-    if 'price' in request.GET:
-        price = Decimal(request.GET['price'])
-        priceset=[]
-        if price:
-            for q in queryset_list:
-                if q.newprice != None:
-                    print(type(q.newprice),type(price))
-                    if q.newprice<=price:
-                        print(q.newprice,price)
-                        priceset.append(q)
-            queryset_list=priceset
+            queryset_list = queryset_list.filter(name__icontains=keywords).distinct()
+
+    print(queryset_list)
 
     if 'city' in request.GET:
         city = request.GET['city']
-        city1=city_choices[city]
+        print(city)
         cityset=[]
-        print(city1)
-        if city1:
-            for q in queryset_list:
-                if q.merchant.city == city1:
-                    print(q)
-                    cityset.append(q)
-                
+        for q in queryset_list:
+            if q.merchant.city == city:
+                cityset.append(q)
+        if cityset:            
             queryset_list = cityset
+
+    print(queryset_list)
 
     if 'state' in request.GET:
         state = request.GET['state']
-        state1=state_choices[state]
+        print(state)
         stateset=[]
-        if state1:
-            for q in queryset_list:
-                if q.merchant.state == state1:
-                    stateset.append(q)
-
+        for q in queryset_list:
+            if q.merchant.state == state:
+                stateset.append(q)
+        if stateset:        
             queryset_list = stateset
 
+    print(queryset_list)
     if 'sublocality' in request.GET:
         sublocality = request.GET['sublocality']
         print(sublocality)
@@ -74,26 +65,52 @@ def search(request):
         subset=[]
         if sub:
             for q in queryset_list:
-                if q.merchant.sublocality==sub:
+                print(q.merchant.sublocality,sub)
+                if q.merchant.sublocality==sublocality:
                     subset.append(q)
+            if subset:
+                queryset_list = subset
 
-            queryset_list = subset
-
+    print(queryset_list)
     if 'category' in request.GET:
         category = request.GET['category']
-        print(category)
+        catset=[]
         for q in queryset_list:
-            print(q.category)
-        if category:
-            queryset_list = queryset_list.filter(category__iexact=category)
+            print(q,q.category)
+            if q.category==category:
+                catset.append(q)
+        if catset:
+            queryset_list = catset
+    
+    print(queryset_list)
 
     if 'brand' in request.GET:
+        print('k')
         brand = request.GET['brand']
         print(brand)
-        if brand:
-            queryset_list = queryset_list.filter(brand__icontains=brand)
+        braset=[]
+        for q in queryset_list:
+            if q.brand==brand:
+                braset.append(q)
+        if braset:        
+            queryset_list = braset
         
+    print(queryset_list)
 
+    if 'price' in request.GET:
+        price = Decimal(request.GET['price'])
+        print(price)
+        priceset=[]
+        if price:
+            for q in queryset_list:
+                if q.newprice != None:
+                    if q.newprice<=price:
+                        print(q.newprice,price)
+                        priceset.append(q)
+            queryset_list=priceset
+            
+    print(queryset_list)
+    
     context = {
         'listings':queryset_list,
         'price_choices':price_choices,
