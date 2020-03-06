@@ -1,0 +1,78 @@
+{%load static%}
+
+ <!-- Navbar -->
+ <div class="pos-f-t" style="background-color: black;">
+    <div class="collapse" id="navbarToggleExternalContent">
+      <div class="bg-dark p-4">
+        <ul class="navbar-nav">
+            <li 
+                {% if '/' == request.path %}
+                class="nav-item active mr-3"
+                {% else %}
+                class="nav-item mr-3"
+                {% endif %}
+            >
+                <a class="nav-link" href="{% url 'index' %}" style="color: white;"><strong>Home</strong></a>
+            </li>
+            <li {% if 'about' in request.path %}
+            class="nav-item active mr-3"
+            {% else %}
+            class="nav-item mr-3"
+            {% endif %}>
+                <a class="nav-link" href="{% url 'about' %}" style="color: white;"><strong>About</strong></a>
+            </li>
+            <li {% if 'listings' in request.path %}
+            class="nav-item active mr-3"
+            {% else %}
+            class="nav-item mr-3"
+            {% endif %}>
+                <a class="nav-link" href="{% url 'listings' %}"style="color: white;"><strong>What's HOT</strong> </a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+            {% if user.is_authenticated %}
+            <li class="nav-item active mr-3">
+                <a class="nav-link" href="{% url 'dashboard' %}"style="color: white;">
+                    <i class="fas fa-user" aria-hidden="true">&nbsp;</i><strong>&nbsp; {{user.first_name}}</strong> </a>
+            </li>
+            <li class="nav-item mr-3">
+                <a class="nav-link" href="javascript:{document.getElementById('logout').submit()}"style="color: white;">
+                    <i class="fas fa-sign-out-alt">&nbsp;</i><strong>&nbsp;logout</strong> </a>
+                    <form action="{% url 'logout' %}" method="POST" id="logout">
+                        {% csrf_token %}
+                        <input type="hidden">
+                    </form>
+            </li>
+            {%else%}
+            <li {% if 'register' in request.path %}
+            class="nav-item active mr-3"
+            {% else %}
+            class="nav-item mr-3"
+            {% endif %}>
+                <a class="nav-link" href="{% url 'register' %}"style="color: white;">
+                    <i class="fas fa-user-plus"></i><strong> Register</strong> </a>
+            </li>
+            <li {% if 'login' in request.path %}
+            class="nav-item active mr-3"
+            {% else %}
+            class="nav-item mr-3"
+            {% endif %}>
+                <a class="nav-link" href="{% url 'login' %}"style="color: white;">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <strong>Login</strong>
+                    </a>
+            </li>
+            {%endif%}
+        </ul>
+      </div>
+    </div>
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand centre" href="{% url 'index' %}">
+            <img src="{% static 'img/loga1.png' %}" class="logo" alt="" style="">
+        </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </nav>
+  </div>

@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block title %}Register {% endblock %}
+{%block content%}
+{% if user.is_authenticated %}
+{% include 'partials/_alert.html' %}
+        <p><a class="nav-link"href="{% url 'dashboard'%}">go to dashboard</a></p>
+{% else %}
+<section id="register" class="bg-light py-5" style="background-image: url(../static/img/food.jpg);background-repeat: no-repeat;
+background-attachment: fixed;  
+background-size: cover;">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h4>
+            <i class="fas fa-user-plus"></i> Seller Registeration</h4>
+          </div>
+          <div class="card-body">
+            <!--Alerts-->
+            {% include 'partials/_alert.html' %}
+            <form action="{% url 'register' %}"method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              <!-- <form action="{% url 'register' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}-->
+                <div class="form-group">
+                  <label for="first_name">store Name</label>
+                  <input type="text" name="first_name" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="username">Username</label>
+                  <input type="text" name="username" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" name="email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label for="password2">Password</label>
+                  <input type="password" name="password" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label for="password">Confirm Password</label>
+                  <input type="password" name="password2" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <input type="file" name="myfile"required>
+                  <button type="submit">Upload</button>
+                </div>
+                <div class="form-group">
+                  <label class="sr-only" >City</label>
+                  <select name="city" class="form-control" required>
+                    <option value="">City</option>
+                    {% for key,value in city_choices.items %}
+                    <option value="{{key}}">{{value}}</option>
+                    {%endfor%}
+                  </select>
+                
+                  <label class="sr-only">sublocality</label>
+                  <select name="sublocality" class="form-control" required>
+                    <option value="">sublocality</option>
+                    {% for key,value in sublocality_choices.items %}
+                    <option value="{{key}}">{{value}}</option>
+                    {%endfor%}
+                  </select>
+                  <label class="sr-only">State</label>
+                  <select name="state" class="form-control" required>
+                    <option value="">State (All)</option>
+                    {% for key,value in state_choices.items %}
+                    <option value="{{key}}">{{value}}</option>
+                    {%endfor%}
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="phone">phone</label>
+                  <input type="text" name="phone" class="form-control" >
+                </div>
+                <div class="form-group">
+                  <label for="description">description</label>
+                  <input type="text" name="description" class="form-control" >
+                </div>
+                <div class="form-group">
+                  <label for="zipcode">zipcode</label>
+                  <input type="text" name="zipcode" class="form-control" >
+                </div>
+                <input type="submit" value="Register" class="btn btn-secondary btn-block">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+  {% endblock %}
