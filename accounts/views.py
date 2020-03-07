@@ -109,6 +109,7 @@ def dashboard(request):
         oldprice=request.POST['oldprice']
         newprice=request.POST['newprice']
         qty = request.POST['qty']
+        link = request.POST['link']
         if not oldprice:
             oldprice=None
         if not newprice:
@@ -116,8 +117,8 @@ def dashboard(request):
         if not qty:
             qty=None
         if category == "":
-            listing = Listing(merchant=m,name=name,photo=photo,brand=brand,description=description,oldprice=oldprice,newprice=newprice,qty=qty)
+            listing = Listing(merchant=m,name=name,photo=photo,brand=brand,description=description,oldprice=oldprice,newprice=newprice,qty=qty,link=link)
         else:
-            listing = Listing(merchant=m,name=name,photo=photo,category=category_choices[category],brand=brand,description=description,oldprice=oldprice,newprice=newprice,qty=qty)
+            listing = Listing(merchant=m,name=name,photo=photo,category=category_choices[category],brand=brand,description=description,oldprice=oldprice,newprice=newprice,qty=qty,link=link)
         listing.save()
     return render(request, 'accounts/dashboard.html',context)

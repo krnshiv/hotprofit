@@ -33,22 +33,39 @@ def delete(request, listing_id):
     
 def update_listing(request, listing_id):
     if request.method=='POST':
-        photo = request.FILES['myfile']
-        name = request.POST['name']
-        category = request.POST['category']
-        brand=request.POST['brand']
-        description=request.POST['description']
-        oldprice=request.POST['oldprice']
-        newprice=request.POST['newprice']
-        qty = request.POST['qty']
-        if not oldprice:
-            oldprice=None
-        if not newprice:
-            newprice = None
-        if not qty:
-            qty=None
+        listing = Listing.objects.get(id=listing_id)
+        
+        if request.FILES.get('myfiles'):
+            photo = request.FILES.get('myfile')
+            listing.photo = photo
+        if request.POST.get('name'):
+            name = request.POST.get('name')
+            listing.name = name
+        if request.POST.get('category'):
+            category = request.POST.get('category')
+            listing.category = category
+        if request.POST.get('brand'):
+            brand=request.POST.get('brand')
+            listing.brand = brand
+        if request.POST.get('description'):
+            description=request.POST.get('description')
+            listing.description = description
+        if request.POST.get('oldprice'):
+            oldprice=request.POST.get('oldprice')
+            listing.oldprice = oldprice
+        if request.POST.get('newprice'):
+            newprice=request.POST.get('newprice')
+            listing.newprice = newprice
+        if request.POST.get('link'):    
+            link = request.POST.get('link')
+            listing.link = link
+        if request.POST.get('qty'):    
+            qty = request.POST.get('qty')
+            listing.qty = qty
+        print(listing.link,link,)
+        listing.save()
         # listing = get_object_or_404(Listing,pk=listing_id)
-        Listing.objects.filter(id=listing_id).update(name=name,photo=photo,category=category_choices[category],brand=brand,description=description,oldprice=oldprice,newprice=newprice,qty=qty)
+        # Listing.objects.filter(id=listing_id).update(name=name,photo=photo,category=category_choices[category],brand=brand,description=description,oldprice=oldprice,newprice=newprice,qty=qty,link=link)
         # listing.save()
     return redirect('dashboard')
     

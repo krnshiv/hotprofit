@@ -3,153 +3,140 @@
 {% load humanize %}
 {% block  title%}Search {%endblock%}
 {% block content %}
-<section id="showcase" style="background-color:black;">
-{% for k,v in city_choices.items %}
-  <div class="container text-center" >
+<section id="showcase-sm" style="padding:0;background-color:black;">
+  {% include 'partials/_alert.html' %}
+  <div class="container" >
     <div class="home-search p-5">
-      <div class="overlay p-5"style="position: relative;">
-        <h1 class="display-4 mb-4">
-          {{ city_choices.items }}Searching best deals Just Got So Easy
-        </h1>
-        <p class="lead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae quas, asperiores eveniet vel nostrum magnam
-          voluptatum tempore! Consectetur, id commodi!</p>
-        <div class="search">
+      <div class="overlay p-4">
+        <div class="container" style="text-align: center;">
+          <div class="search" style="display:inline-grid; justify-content:center">
+          <h1 class="" style="color: white;text-align:left">
+            Search
+          </h1>
           <form action="{% url 'search' %}">
             <!-- Form Row 1 -->
-            <div class="form-row">
-              <div class="col-md-6 mb-3">
-                <select name="price" class="form-control" id="type">
-                  <option selected="true" disabled="disabled">Max Price (Any)</option>
-                  {% for key,value in price_choices.items %}
-                  <option value="{{key}}">{{value}}</option>
-                   {%endfor%}
-                  
-                </select>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label class="sr-only">category</label>
-                <select name="category" class="form-control">
-                  <option selected="true" disabled="disabled">category (All)</option>
-                  {% for key,value in category_choices.items %}
-                  <option value="{{key}}">{{value}}</option>
-                   {%endfor%}
-                </select>
-              </div>
+              <div class="form-row" style="margin: 0px 0px 10px 0px;">
+                <label class="sr-only">keywords</label>
+              <input type="text" name="keywords" class="form-control" placeholder="Keyword">
+                    
+              <label class="sr-only">City</label>
+              <select name="city" class="form-control">
+                <option selected="true" disabled="disabled">Select City</option>
+                {% for key,value in city_choices.items %}
+                <option value="{{key}}">{{value}}</option>
+                {%endfor%}
+              </select>    
+                             
             </div>
-            <div class="form-row">
-            <div class="col-md-6 mb-3">
-              <label class="sr-only">keywords</label>
-              <input type="text" name="keywords" class="form-control" placeholder="Keyword (item, brand, store etc)">
-            </div>
-            <div class="col-md-6 mb-3">
-                <label class="sr-only">brand</label>
-                <input type="text" name="brand" class="form-control" placeholder="brand (item, brand, store etc)">
-              </div>
-
+              <!-- Form Row 2 -->
+              
+              <button style="width: 100%;" class="btn btn-danger" type="submit">Submit form</button>
+            </form>
           </div>
-            <!-- Form Row 2 -->
-            <div class="form-row">
-
-              <div class="col-md-4 mb-3">
-                <label class="sr-only">sublocality</label>
-                <select name="sublocality" class="form-control">
-                  <option selected="true" disabled="disabled">sublocality (All)</option>
-                  {% for key,value in sublocality_choices.items %}
-                  <option value="{{key}}">{{value}}</option>
-                   {%endfor%}
-                </select>
-              </div>
-               
-              <div class="col-md-4 mb-3">
-                <label class="sr-only">City</label>
-                <select name="city" class="form-control">
-                  <option selected="true" disabled="disabled">City (All)</option>
-                  {% for key,value in city_choices.items %}
-                  <option value="{{key}}">{{value}}</option>
-                   {%endfor%}
-                </select>
-              </div>
-
-              <div class="col-md-4 mb-3">
-                <label class="sr-only">State</label>
-                <select name="state" class="form-control">
-                  <option selected="true" disabled="disabled">State (All)</option>
-                   {% for key,value in state_choices.items %}
-                     <option value="{{key}}">{{value}}</option>
-                   {%endfor%}
-                </select>
-              </div>
-            </div>
-            <button class="btn btn-secondary btn-block mt-4" type="submit">Submit form</button>
-          </form>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-  <!-- Breadcrumb -->
-  <section id="bc" class="mt-3">
-    <div class="container">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="{% url 'index' %}">
-              <i class="fas fa-home"></i> Home</a>
+
+<!-- Breadcrumb -->
+<section id="bc" class="mt-3" style="margin-top: 0rem !important;background-color: #000000;">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb" style="
+      background: black;
+      margin: 0;">
+        <li class="breadcrumb-item">
+          <a href="{% url 'index' %}"style="
+          color: snow;
+      ">
+            <i class="fas fa-home"></i> Home</a>
           </li>
           <li class="breadcrumb-item">
-            <a href="{% url 'listings' %}">Browse Listings</a>
+            <a href="{% url 'listings' %}"style="
+            color: snow;
+        ">Browse Listings</a>
           </li>
           <li class="breadcrumb-item active"> Search Results</li>
         </ol>
       </nav>
     </div>
   </section>
-
-  <section id="listings" class="py-5">
+  
+  <section id="listings" class="py-5" style="background-color: black;color:white">
     <div class="container">
-      <h3 class="text-center mb-3">Latest Listings</h3>
-      <div class="row">
+      <h3 class="text-center sm-3" style="
+      margin: 0 0 45px 0;">Latest Listings</h3>
+      
+      <div class="card-columns">
         {% if listings %}
         {% for listing in listings %}
-        <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card text-white bg-danger mb-3 sm-3" style="background-color: black;">
+          <div class="card-overlay">
+            <h2>{%if listing.newprice %}
+              <span class="badge badge-dark text-white">₹{{ listing.newprice | intcomma }}</span>
+               {%else%}
+               <span class="badge badge-dark text-white">SALE</span>
+              {%endif%}
+            </h2>
+          </div>
+          <div class="card-header"><h4 class="text">{{listing.name}}</h4></div>
+          <div class="card-body">
+            <h3 class="card-title">{{listing.merchant}}</h3>
+            <h4>{{listing.link| default:""}}</h4>
+             {{listing.merchant.city|default:""}},{{listing.merchant.state|default:""}}
+            <p class="card-text">
+            {{listing.description|default:""}}
+            <hr>
+              <div class="">
+             {{listing.posted | timesince }}</div>
+            </p>
+            
+            <a href="{% url 'listing' listing.id %}" style="border-color: white;color:white" class="btn btn-outline-primary">More Info</a>
+            {% if listing.link %}
+            <a href="https://{{listing.link}}" style="border-color: white;color:white" class="btn btn-outline-primary">Visit Link</a>
+            {% endif %}
+          </div>
+        </div>
+        <!-- <div class="row">
           <div class="card listing-preview">
-            <img class="card-img-top" src="{{ listing.photo.url }}" alt="">
             <div class="card-img-overlay">
-              <h2>
-                <span class="badge badge-secondary text-white">₹{{listing.newprice | intcomma }}</span>
+              <h2>{%if listing.newprice %}
+                <span class="badge badge-secondary text-white">₹{{ listing.newprice | intcomma }}</span>
+                 {%else%}
+                 <span class="badge badge-secondary text-white">SALE</span>
+                {%endif%}
               </h2>
             </div>
+
+            
             <div class="card-body">
               <div class="listing-heading text-center">
                 <h4 class="text-primary">{{listing.name}}</h4>
                 <p>
-                  <i class="fas fa-map-marker text-secondary"></i>{{listing.merchant.sublocality}}</p>
+                  <i class="fas fa-map-marker text-secondary">&nbsp;</i>{{listing.merchant.sublocality|default:""}}</p>
               </div>
               <hr>
               <div class="row py-2 text-secondary">
                 <div class="col-6">
                   {%if listing.qty %}
-                <i class="fas fa-th-large"></i> Qty:{{listing.qty}} left
-                {%else%}
-                <i class="fas fa-th-large"></i>
-              {%endif%}
-              <i class=""></i> {% if listing.is_valid %}
-              <p>offer valid</p>
-              {% else %}
-              <p>invalid offer</p>
-              {% endif %}
-            </div>
-                <div class="col-6">
-                  {% if k == listing.merchant.city %}
-                  <i class=""></i> {{v}},{{listing.merchant.state}}</div>
+                  <i class=""></i> Qty:{{listing.qty|default:""}} left
                   {%else%}
-                  <i class=""></i> {{listing.merchant.state}}</div>
-                  {%endif%}
+                  <i class=""></i>
+                {%endif%}
+                <i class=""></i> {% if listing.is_valid %}
+                                   <p>Valid offer</p>
+                                   {% else %}
+                                   <p>Invalid offer</p>
+                                   {% endif %}
+              </div>
+                <div class="col-6">
+                  <i class=""></i> {{listing.merchant.city|default:""}},{{listing.merchant.state|default:""}}</div>
               </div>
               <div class="row py-2 text-secondary">
                 <div class="col-12">
-                  <i class=""></i>{{listing.description}}</div>
+                  <i class=""></i>{{listing.description|default:""}}</div>
               </div>
               <hr>
               <div class="row py-2 text-secondary">
@@ -164,18 +151,16 @@
               <a href="{% url 'listing' listing.id %}" class="btn btn-primary btn-block">More Info</a>
             </div>
           </div>
-        </div>
+        </div>     -->
         {% endfor %}
-  
+
         {%else%}
-  
-        <div class='col-md-12'>
-          <p>No Deals Available</p>
-        </div>
-  
+
+         <div class='col-md-12'>
+         <p>No Deals Available</p>
+         </div>
+
         {%endif%}
-      </div>
-    </div>
+    </div></div>
   </section>
-{%endfor%}
 {% endblock %}

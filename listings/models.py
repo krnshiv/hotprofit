@@ -33,7 +33,7 @@ class Listing(models.Model):
     posted = models.DateTimeField(auto_now_add=True)
     is_valid = models.BooleanField(default=True)
     validity = models.DateField(null=True, blank=True, default=None)
-
+    link = models.CharField(max_length=120,null=True, blank=True, default=None)
     def __str__(self):
         return self.name
     

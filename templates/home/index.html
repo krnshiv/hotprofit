@@ -5,86 +5,36 @@
 {%block content%}
 
   <!-- Showcase -->
-  <section id="showcase" style="padding:0;background-color:black;">
+  <section id="showcase-sm" style="padding:0;background-color:black;">
     {% include 'partials/_alert.html' %}
-    <div class="container-fluid" >
+    <div class="container" >
       <div class="home-search p-5">
-        <div class="overlay p-4" style="position: relative;">
-          <h1 class="display-4 mb-4">
-            Searching best deals Just Got So Easy
-          </h1>
-          <p class="lead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae quas, asperiores eveniet vel nostrum magnam
-            voluptatum tempore! Consectetur, id commodi!</p>
-          <div class="search">
+        <div class="overlay p-4">
+          <div class="container" style="text-align: center;">
+            <div class="search" style="display:inline-grid; justify-content:center">
+            <h1 class="" style="color: white;text-align:left">
+              Search
+            </h1>
             <form action="{% url 'search' %}">
               <!-- Form Row 1 -->
-              <div class="form-row">
-                <div class="col-md-6 mb-3">
-                  <select name="price" class="form-control" id="type">
-                    <option selected="true" disabled="disabled">Max Price (Any)</option>
-                    {% for key,value in price_choices.items %}
-                    <option value="{{key}}">{{value}}</option>
-                     {%endfor%}
-                    
-                  </select>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="sr-only">category</label>
-                  <select name="category" class="form-control">
-                    <option selected="true" disabled="disabled">category (All)</option>
-                    {% for key,value in category_choices.items %}
-                    <option value="{{key}}">{{value}}</option>
-                     {%endfor%}
-                  </select>
-                </div>
-          
+                <div class="form-row" style="margin: 0px 0px 10px 0px;">
+                  <label class="sr-only">keywords</label>
+                <input type="text" name="keywords" class="form-control" placeholder="Keyword">
+                      
+                <label class="sr-only">City</label>
+                <select name="city" class="form-control">
+                  <option selected="true" disabled="disabled">Select City</option>
+                  {% for key,value in city_choices.items %}
+                  <option value="{{key}}">{{value}}</option>
+                  {%endfor%}
+                </select>    
+                               
               </div>
-              <div class="form-row">
-              <div class="col-md-6 mb-3">
-                <label class="sr-only">keywords</label>
-                <input type="text" name="keywords" class="form-control" placeholder="Keyword (item, brand, store etc)">
-              </div>
-              <div class="col-md-6 mb-3">
-                <label class="sr-only">brand</label>
-                <input type="text" name="brand" class="form-control" placeholder="brand (item, brand, store etc)">
-              </div>
-
+                <!-- Form Row 2 -->
+                
+                <button style="width: 100%;" class="btn btn-danger" type="submit">Submit form</button>
+              </form>
             </div>
-              <!-- Form Row 2 -->
-              <div class="form-row">
-
-                <div class="col-md-4 mb-3">
-                  <label class="sr-only">sublocality</label>
-                  <select name="sublocality" class="form-control">
-                    <option selected="true" disabled="disabled">sublocality (All)</option>
-                    {% for key,value in sublocality_choices.items %}
-                    <option value="{{key}}">{{value}}</option>
-                     {%endfor%}
-                  </select>
-                </div>
-                 
-                <div class="col-md-4 mb-3">
-                  <label class="sr-only">City</label>
-                  <select name="city" class="form-control">
-                    <option selected="true" disabled="disabled">City (All)</option>
-                    {% for key,value in city_choices.items %}
-                    <option value="{{key}}">{{value}}</option>
-                     {%endfor%}
-                  </select>
-                </div>
-
-                <div class="col-md-4 mb-3">
-                  <label class="sr-only">State</label>
-                  <select name="state" class="form-control">
-                    <option selected="true" disabled="disabled">State (All)</option>
-                     {% for key,value in state_choices.items %}
-                       <option value="{{key}}">{{value}}</option>
-                     {%endfor%}
-                  </select>
-                </div>
-              </div>
-              <button class="btn btn-secondary btn-block mt-4" type="submit">Submit form</button>
-            </form>
           </div>
         </div>
       </div>
@@ -92,25 +42,27 @@
   </section>
 
   <!-- Listings -->
-  <section id="listings" class="py-5" style="">
+  <section id="listings" class="py-5" style="background-color: black;color:white">
     <div class="container">
-      <h3 class="text-center mb-3">Latest Listings</h3>
+      <h3 class="text-center sm-3" style="
+      margin: 0 0 45px 0;">Latest Listings</h3>
       
       <div class="card-columns">
         {% if listings %}
         {% for listing in listings %}
-        <div class="card text-white bg-primary mb-3" style="background-color:#007bff!important">
+        <div class="card text-white bg-danger mb-3 sm-3" style="background-color: black;">
           <div class="card-overlay">
             <h2>{%if listing.newprice %}
-              <span class="badge badge-secondary text-white">₹{{ listing.newprice | intcomma }}</span>
+              <span class="badge badge-dark text-white">₹{{ listing.newprice | intcomma }}</span>
                {%else%}
-               <span class="badge badge-secondary text-white">SALE</span>
+               <span class="badge badge-dark text-white">SALE</span>
               {%endif%}
             </h2>
           </div>
           <div class="card-header"><h4 class="text">{{listing.name}}</h4></div>
           <div class="card-body">
             <h3 class="card-title">{{listing.merchant}}</h3>
+            <h4>{{listing.link| default:""}}</h4>
              {{listing.merchant.city|default:""}},{{listing.merchant.state|default:""}}
             <p class="card-text">
             {{listing.description|default:""}}
@@ -118,8 +70,11 @@
               <div class="">
              {{listing.posted | timesince }}</div>
             </p>
+            
             <a href="{% url 'listing' listing.id %}" style="border-color: white;color:white" class="btn btn-outline-primary">More Info</a>
-
+            {% if listing.link %}
+            <a href="https://{{listing.link}}" style="border-color: white;color:white" class="btn btn-outline-primary">Visit Link</a>
+            {% endif %}
           </div>
         </div>
         <!-- <div class="row">
@@ -184,32 +139,27 @@
          </div>
 
         {%endif%}
-    </div>
+    </div></div>
   </section>
 
-  <section id="services" class="py-5 text-white" style="background-color:darkblue">
+  <section id="services" class="py-5 text-white" style="background-color:rgb(0, 0, 0)">
     <div class="container">
       <div class="row text-center">
         <div class="col-md-4">
           <i class="fas fa-comment fa-4x mr-4"></i>
           <hr>
           <h3>Consulting Services</h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, debitis nam! Repudiandae, provident iste consequatur
-            hic dignissimos ratione ea quae.</p>
         </div>
         <div class="col-md-4">
           <i class="fas fa-home fa-4x mr-4"></i>
           <hr>
           <h3>inventory Management</h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, debitis nam! Repudiandae, provident iste consequatur
-            hic dignissimos ratione ea quae.</p>
+          
         </div>
         <div class="col-md-4">
           <i class="fas fa-suitcase fa-4x mr-4"></i>
           <hr>
           <h3>Sell with us</h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, debitis nam! Repudiandae, provident iste consequatur
-            hic dignissimos ratione ea quae.</p>
         </div>
       </div>
     </div>

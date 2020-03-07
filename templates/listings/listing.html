@@ -78,7 +78,12 @@
                   {%else%}
                   <i class="float-right"></i>
                   {%endif%}
-                </li></div>
+                </li>{% if listing.link %}
+                <li class="list-group-item text-secondary">
+                  <i class=""></i> Visit:
+                  <span class="float-right"><a class=" btn btn-light" href="https://{{listing.link}}">{{listing.link | default:""}}</a></span>
+                </li>{%endif%}
+              </div>
               </ul>
                 <div class="col-md-6">
               <ul class="list-group list-group-flush">

@@ -11,10 +11,9 @@ city_choices = {
 }
 
 sublocality_choices = {
-    "HZ":'Hazratganj',
-    "MA": 'Mahanagar',
-    "GN": 'Gomti nagar',
-    "IN": 'Indira nagar'
+    "lko":['Hazratganj','Mahanagar','Gomti nagar','Indira nagar'],
+    "Mum":{"CO":'Colaba',"DD": 'Dadar',"AN": 'Andheri',"NP": 'Nariman points'},
+    "Bng":{"HSR":"HSR layout", "KRM": "Kormanagala", "IN": "Indira nagar","WHT": "Whitefield"}
 }
 
 price_choices = {"100": '₹100',
