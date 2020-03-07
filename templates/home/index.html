@@ -78,11 +78,15 @@
           </div>
         </div>
         <!-- <div class="row">
-          <div class="card listing-preview">
-            <div class="card-img-overlay">
-              <h2>{%if listing.newprice %}
-                <span class="badge badge-secondary text-white">₹{{ listing.newprice | intcomma }}</span>
-                 {%else%}
+          <div class="col-md-6 col-lg-2 mb-4">
+        <div class="card listing-preview">
+          <img class="card-img-top" src="{{ listing.photo.url }}" alt="">
+          <div class="card-img-overlay">
+            {%if listing.newprice %}
+              <h2>
+              <span class="badge badge-secondary text-white">₹{{listing.newprice | intcomma }}</span>
+            </h2>
+            {%else%}
                  <span class="badge badge-secondary text-white">SALE</span>
                 {%endif%}
               </h2>
