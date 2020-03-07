@@ -92,7 +92,7 @@ def logout(request):
 def dashboard(request):
     print(request.user.username)
     if request.user.is_authenticated:
-        m = Merchant.objects.get(name__icontains=request.user.username)
+        m = Merchant.objects.filter(name__icontains=request.user.first_name)
         print(m)
         l = Listing.objects.filter(merchant__name__icontains=request.user.first_name)
         context = {
