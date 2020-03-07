@@ -115,7 +115,9 @@ def dashboard(request):
             newprice = None
         if not qty:
             qty=None
-        print(name,qty,photo.name,category,description)
-        listing = Listing(merchant=m,name=name,photo=photo,category=category_choices[category],brand=brand,description=description,oldprice=oldprice,newprice=newprice,qty=qty)
+        if category == "":
+            listing = Listing(merchant=m,name=name,photo=photo,brand=brand,description=description,oldprice=oldprice,newprice=newprice,qty=qty)
+        else:
+            listing = Listing(merchant=m,name=name,photo=photo,category=category_choices[category],brand=brand,description=description,oldprice=oldprice,newprice=newprice,qty=qty)
         listing.save()
     return render(request, 'accounts/dashboard.html',context)

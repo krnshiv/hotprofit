@@ -1,28 +1,57 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render,redirect, get_object_or_404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .choices import price_choices,state_choices,sublocality_choices,city_choices,category_choices
 from decimal import Decimal
 from .models import Listing
-
+from merchants.models import Merchant
 def index(request):
     listings = Listing.objects.order_by('-posted').filter(is_valid=True)
     
     paginator = Paginator(listings,8)
     page = request.GET.get('page')
     paged_listings = paginator.get_page(page)
-
     context = {
-        'listings':paged_listings
+        'listings': paged_listings,
     }
     return render(request, 'listings/listings.html',context)
 
 def listing(request, listing_id):
     listing = get_object_or_404(Listing,pk=listing_id)
+    city = city_choices[listing.merchant.city]
+    state = state_choices[listing.merchant.state] 
     context = {
-        'listing': listing
+        'listing': listing,
+        'state':state,
+        'city':city
     }
     return render(request, 'listings/listing.html',context)
 
+def delete(request, listing_id):
+    listing = get_object_or_404(Listing,pk=listing_id)
+    listing.delete()
+    return redirect('dashboard')
+    
+def update_listing(request, listing_id):
+    if request.method=='POST':
+        photo = request.FILES['myfile']
+        name = request.POST['name']
+        category = request.POST['category']
+        brand=request.POST['brand']
+        description=request.POST['description']
+        oldprice=request.POST['oldprice']
+        newprice=request.POST['newprice']
+        qty = request.POST['qty']
+        if not oldprice:
+            oldprice=None
+        if not newprice:
+            newprice = None
+        if not qty:
+            qty=None
+        # listing = get_object_or_404(Listing,pk=listing_id)
+        Listing.objects.filter(id=listing_id).update(name=name,photo=photo,category=category_choices[category],brand=brand,description=description,oldprice=oldprice,newprice=newprice,qty=qty)
+        # listing.save()
+    return redirect('dashboard')
+    
 def search(request):
     print(request.GET)
     queryset_list = Listing.objects.order_by('-posted')

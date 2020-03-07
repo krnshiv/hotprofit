@@ -61,22 +61,21 @@
             <div class="row py-2 text-secondary">
               <div class="col-6">
                 {%if listing.qty %}
-                <i class="fas fa-th-large"></i> Qty:{{listing.qty}} left</div>
+                <i class="fas fa-th-large"></i> Qty:{{listing.qty}} left
                 {%else%}
-                <i class="fas fa-th-large"></i></div>
+                <i class="fas fa-th-large"></i>
               {%endif%}
-              <div class="col-6">
-                <i class=""></i> {{listing.merchant.city}},{{listing.merchant.state}}</div>
-            </div>
-            <div class="row py-2 text-secondary">
-              <div class="col-6">
-                <i class=""></i> {% if listing.is_valid %}
+              <i class=""></i> {% if listing.is_valid %}
                                  <p>offer valid</p>
                                  {% else %}
                                  <p>invalid offer</p>
                                  {% endif %}
-                                </div>
+              </div>
               <div class="col-6">
+                <i class=""></i> {{listing.merchant.city}},{{listing.merchant.state}}
+            </div></div>
+            <div class="row py-2 text-secondary">
+              <div class="col-12">
                 <i class=""></i>{{listing.description}}</div>
             </div>
             <hr>

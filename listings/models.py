@@ -22,7 +22,7 @@ category_choices={
 class Listing(models.Model):
     merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE,null=True, blank=True, default=None)
     name = models.CharField(max_length=120,null=True, blank=True, default=None) 
-    category = models.CharField(max_length=120,choices=category_choices,default=None)
+    category = models.CharField(max_length=120,choices=category_choices,blank=True,default=None)
     brand = models.CharField(max_length=120,null=True, blank=True, default=None)
     tags =  TaggableManager(blank=True)
     oldprice = models.DecimalField(max_digits=10, decimal_places=2,null=True, blank=True, default=None)

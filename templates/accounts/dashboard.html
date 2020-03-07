@@ -40,11 +40,11 @@
           <div class="card" style="background-color:rgb(0, 0, 0); color:linen" >
             <img class="card-img-top" src="{{merchant.photo.url}}" alt="Seller of the month">
             <div class="card-body">
-              <h5 class="card-title">Merchant:{{merchant.name}}</h5>
-              <h5 class="text">{{merchant.sublocality}}</h5>
-              <h5 class="text">{{city}}</h5>
-              <h5 class="text">{{state}}</h5>
-              <p>{{merchant.description}}</p>
+              <h5 class="card-title">{{merchant.name|default:""}}</h5>
+              <h5 class="text">{{merchant.sublocality|default:""}}</h5>
+              <h5 class="text">{{city|default:""}}</h5>
+              <h5 class="text">{{state|default:""}}</h5>
+              <p>{{merchant.description|default:""}}</p>
             </div>
             <button class="btn-primary btn-block btn-lg" data-toggle="modal" data-target="#inquiryModal">Add New Listing</button>
           </div></div>
@@ -65,8 +65,64 @@
                   <tr>
                     <td>{{ forloop.counter }}</td>
                     <td>{{ listing.name }}</td>
-                    <td>
-                      <a class="btn btn-light" href="{% url 'listing' listing.id %}">View Listing</a>
+                    <td style="float: right;">
+                      <a style=""class="btn btn-outline-primary" href="{% url 'listing' listing.id %}">View</a>
+                        <a class="btn btn-outline-danger" style="" href="{% url 'delete' listing.id %}">Delete</a>
+                        <button style=""class="btn btn-outline-dark" data-toggle="modal" data-target="#editModal">Edit</button>
+                          <!--edit Modal-->
+                              <div class="modal fade" id="editModal" role="dialog">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="editModalLabel">Edit</h5>
+                                      <button type="button" class="close" data-dismiss="modal">
+                                        <span>&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <form action="{% url 'update_listing' listing.id %}"method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                          <label for="name" class="col-form-label">Product:</label>
+                                          <input type="text" name="name" class="form-control" value="" required> 
+                                        </div>
+                                        <div class="form-group">
+                                          <input type="file" name="myfile"required>
+                                          <button type="submit">Upload</button>
+                                        </div>
+                                          <select name="category" class="form-control" required >
+                                            <option value="" required >category (All)</option>
+                                            {% for key,value in category_choices.items %}
+                                            <option value="{{key}}">{{value}}</option>
+                                            {%endfor%}
+                                          </select>
+                                        <div class="form-group">
+                                          <label for="brand" class="col-form-label">brand:</label>
+                                          <input type="text" name="brand" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="description" class="col-form-label">description:</label>
+                                          <textarea name="description" class="form-control"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="oldprice" class="col-form-label">oldprice:</label>
+                                          <input type="number" name="oldprice" class="form-control" value="" >
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="newprice" class="col-form-label">newprice:</label>
+                                          <input type="number" name="newprice" class="form-control" value="" >
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="qty" class="col-form-label">quantity:</label>
+                                          <input type="number" name="qty" class="form-control" value="" >
+                                        </div>
+                                        <hr>
+                                        <input type="submit" value="Send" class="btn btn-block btn-secondary">
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                     </td>
                   </tr>
                 {% endfor %}
@@ -88,7 +144,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="inquiryModalLabel">Make An Inquiry</h5>
+          <h5 class="modal-title" id="inquiryModalLabel">New</h5>
           <button type="button" class="close" data-dismiss="modal">
             <span>&times;</span>
           </button>
@@ -104,15 +160,12 @@
               <input type="file" name="myfile"required>
               <button type="submit">Upload</button>
             </div>
-            <div class="form-group">
-              <label class="sr-only">category</label>
-              <select name="category" class="form-control">
-                <option value="">category (All)</option>
+              <select name="category" class="form-control" required >
+                <option value="" required >category (All)</option>
                 {% for key,value in category_choices.items %}
                 <option value="{{key}}">{{value}}</option>
                  {%endfor%}
               </select>
-            </div>
             <div class="form-group">
               <label for="brand" class="col-form-label">brand:</label>
               <input type="text" name="brand" class="form-control">
@@ -123,15 +176,15 @@
             </div>
             <div class="form-group">
               <label for="oldprice" class="col-form-label">oldprice:</label>
-              <input type="text" name="oldprice" class="form-control" value="" >
+              <input type="number" name="oldprice" class="form-control" value="" >
             </div>
             <div class="form-group">
               <label for="newprice" class="col-form-label">newprice:</label>
-              <input type="text" name="newprice" class="form-control" value="" >
+              <input type="number" name="newprice" class="form-control" value="" >
             </div>
             <div class="form-group">
               <label for="qty" class="col-form-label">quantity:</label>
-              <input type="text" name="qty" class="form-control" value="" >
+              <input type="number" name="qty" class="form-control" value="" >
             </div>
             <hr>
             <input type="submit" value="Send" class="btn btn-block btn-secondary">
@@ -143,7 +196,4 @@
        
 
 
-
-    </div>
-  </section>
   {% endblock %}

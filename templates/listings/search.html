@@ -3,13 +3,13 @@
 {% load humanize %}
 {% block  title%}Search {%endblock%}
 {% block content %}
-<section id="showcase" style="background-color:black;color:black">
-
+<section id="showcase" style="background-color:black;">
+{% for k,v in city_choices.items %}
   <div class="container text-center" >
     <div class="home-search p-5">
       <div class="overlay p-5"style="position: relative;">
         <h1 class="display-4 mb-4">
-          Searching best deals Just Got So Easy
+          {{ city_choices.items }}Searching best deals Just Got So Easy
         </h1>
         <p class="lead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae quas, asperiores eveniet vel nostrum magnam
           voluptatum tempore! Consectetur, id commodi!</p>
@@ -130,22 +130,25 @@
               <div class="row py-2 text-secondary">
                 <div class="col-6">
                   {%if listing.qty %}
-                <i class="fas fa-th-large"></i> Qty:{{listing.qty}} left</div>
+                <i class="fas fa-th-large"></i> Qty:{{listing.qty}} left
                 {%else%}
-                <i class="fas fa-th-large"></i></div>
+                <i class="fas fa-th-large"></i>
               {%endif%}
+              <i class=""></i> {% if listing.is_valid %}
+              <p>offer valid</p>
+              {% else %}
+              <p>invalid offer</p>
+              {% endif %}
+            </div>
                 <div class="col-6">
-                  <i class=""></i> {{listing.merchant.city}},{{listing.merchant.state}}</div>
+                  {% if k == listing.merchant.city %}
+                  <i class=""></i> {{v}},{{listing.merchant.state}}</div>
+                  {%else%}
+                  <i class=""></i> {{listing.merchant.state}}</div>
+                  {%endif%}
               </div>
               <div class="row py-2 text-secondary">
-                <div class="col-6">
-                  <i class=""></i> {% if listing.is_valid %}
-                                   <p>offer valid</p>
-                                   {% else %}
-                                   <p>invalid offer</p>
-                                   {% endif %}
-                                  </div>
-                <div class="col-6">
+                <div class="col-12">
                   <i class=""></i>{{listing.description}}</div>
               </div>
               <hr>
@@ -174,5 +177,5 @@
       </div>
     </div>
   </section>
-
+{%endfor%}
 {% endblock %}

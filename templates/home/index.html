@@ -102,8 +102,6 @@
           <div class="card listing-preview">
             {% if listing.photo %}
             <img class="card-img-top" src="{{ listing.photo.url }}" alt="">
-            {%else%}
-            <img class="card-img-top" src="/static/img/food.jpg" alt="">
             {%endif%}
             <div class="card-img-overlay">
               <h2>{%if listing.newprice %}
@@ -123,22 +121,21 @@
               <div class="row py-2 text-secondary">
                 <div class="col-6">
                   {%if listing.qty %}
-                  <i class=""></i> Qty:{{listing.qty|default:""}} left</div>
+                  <i class=""></i> Qty:{{listing.qty|default:""}} left
                   {%else%}
-                  <i class=""></i></div>
+                  <i class=""></i>
                 {%endif%}
+                <i class=""></i> {% if listing.is_valid %}
+                                   <p>Valid offer</p>
+                                   {% else %}
+                                   <p>Invalid offer</p>
+                                   {% endif %}
+              </div>
                 <div class="col-6">
                   <i class=""></i> {{listing.merchant.city|default:""}},{{listing.merchant.state|default:""}}</div>
               </div>
               <div class="row py-2 text-secondary">
-                <div class="col-6">
-                  <i class=""></i> {% if listing.is_valid %}
-                                   <p>offer valid</p>
-                                   {% else %}
-                                   <p>invalid offer</p>
-                                   {% endif %}
-                                  </div>
-                <div class="col-6">
+                <div class="col-12">
                   <i class=""></i>{{listing.description|default:""}}</div>
               </div>
               <hr>
