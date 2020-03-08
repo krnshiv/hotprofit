@@ -17,15 +17,21 @@
   </section>
 
   <!-- Breadcrumb -->
-  <section id="bc" class="mt-3">
-    <div class="container-fluid">
-      <nav>
-        <ol class="breadcrumb">
+  <section id="bc" class="mt-3" style="margin-top: 0rem !important;background-color: #000000;">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="
+        background: black;color:white;
+        margin: 0;">
           <li class="breadcrumb-item">
-            <a href="{% url 'index' %}">Home</a>
+            <a href="{% url 'index' %}"style="
+            color: snow;
+        ">Home</a>
           </li>
           <li class="breadcrumb-item">
-            <a href="{% url 'listings' %}">Listings</a>
+            <a href="{% url 'listings' %}"style="
+            color: snow;
+        ">Listings</a>
           </li>
           <li class="breadcrumb-item active">{{listing.name | title}}</li>
         </ol>
@@ -34,12 +40,14 @@
   </section>
 
   <!-- Listing -->
-  <section id="listing" class="py-4">
+  <section id="listing" class="py-4" style="background-color: black;">
     <div class="container-fluid">
-      <a href="{% url 'listings' %}" class="btn btn-light mb-4">Back To Listings</a>
+      <a href="{% url 'listings' %}" class="btn btn-dark mb-4"style="
+      background: border-box;
+  ">Back To Listings</a>
       <div class="row">
         <div class="col-md-3">
-          <div class="card">
+          <div class="card" style="background-color:black;color:white">
             {%if listing.merchant.photo %}
             <img class="card-img-top" src="{{listing.merchant.photo.url}}" alt="">
             {%else%}
@@ -61,25 +69,33 @@
           <!-- Home Main Image -->
           <img src="{{listing.photo.url}}" alt="" style="width: 100%;" class="img-main img-fluid mb-3">
           <!-- Fields -->
-          <div class="row mb-5 fields">
+          <div class="row mb-5 fields" style="background-color: black;color:white">
             <div class="col-md-6">
               <ul class="list-group list-group-flush">
-                <li class="list-group-item text-secondary">
+                <li class="list-group-item text-secondary"style="
+                background-color: transparent;
+            ">
                   <i class="fas"></i> New Price:
                   <span class="float-right">₹{{listing.newprice}}</span>
                 </li>
-                <li class="list-group-item text-secondary">
+                <li style="
+                background-color: transparent;
+            " class="list-group-item text-secondary">
                   <i class=""></i> Old Price:
                   <span class="float-right">₹{{listing.oldprice}}</span>
                 </li>
-                <li class="list-group-item text-secondary ">
+                <li style="
+                background-color: transparent;
+            " class="list-group-item text-secondary ">
                   {%if listing.qty %}
                   <i class=""></i> Qty:<span class="float-right">{{listing.qty}} left</span>
                   {%else%}
                   <i class="float-right"></i>
                   {%endif%}
                 </li>{% if listing.link %}
-                <li class="list-group-item text-secondary">
+                <li style="
+                background-color: transparent;
+            " class="list-group-item text-secondary">
                   <i class=""></i> Visit:
                   <span class="float-right"><a class=" btn btn-light" href="https://{{listing.link}}">{{listing.link | default:""}}</a></span>
                 </li>{%endif%}
@@ -87,14 +103,20 @@
               </ul>
                 <div class="col-md-6">
               <ul class="list-group list-group-flush">
-                <li class="list-group-item text-secondary ">
+                <li style="
+                background-color: transparent;
+            "class="list-group-item text-secondary ">
                   <i class=""></i>offer valid:<span class="float-right">{{listing.is_valid}}</span>
                 </li>
-                <li class="list-group-item ">
+                <li style="
+                background-color: transparent;
+            "class="list-group-item ">
                   <i class=""></i> Posted:
                   <span class="float-right">{{listing.posted | timesince}} ago</span>
                 </li>
-                <li class="list-group-item text-secondary">
+                <li style="
+                background-color: transparent;
+            "class="list-group-item text-secondary">
                   <i class=""></i> Merchant:
                   <span class="float-right">{{listing.merchant.name}}
                   </span>
