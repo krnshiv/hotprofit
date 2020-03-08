@@ -92,7 +92,7 @@ def logout(request):
 def dashboard(request):
     print(request.user.username)
     if request.user.is_authenticated:
-        m = Merchant.objects.filter(name__icontains=request.user.first_name)
+        m = Merchant.objects.get(name__icontains=request.user.first_name)
         print(m)
         l = Listing.objects.filter(merchant__name__icontains=request.user.first_name)
         context = {
@@ -116,9 +116,7 @@ def dashboard(request):
             newprice = None
         if not qty:
             qty=None
-        if category == "":
-            listing = Listing(merchant=m,name=name,photo=photo,brand=brand,description=description,oldprice=oldprice,newprice=newprice,qty=qty,link=link)
-        else:
-            listing = Listing(merchant=m,name=name,photo=photo,category=category_choices[category],brand=brand,description=description,oldprice=oldprice,newprice=newprice,qty=qty,link=link)
+        
+        listing = Listing(merchant=m,name=name,photo=photo,category=category_choices[category],brand=brand,description=description,oldprice=oldprice,newprice=newprice,qty=qty,link=link)
         listing.save()
     return render(request, 'accounts/dashboard.html',context)
