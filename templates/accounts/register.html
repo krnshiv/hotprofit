@@ -45,7 +45,7 @@ background-size: cover;">
                   <input type="password" name="password2" class="form-control" required>
                 </div>
                 <div class="form-group">
-                  <input type="file" name="myfile"required>
+                  <input placeholder="(optional)" type="file" name="myfile">
                   <button type="submit">Upload</button>
                 </div>
                 <div class="form-group">
@@ -57,15 +57,15 @@ background-size: cover;">
                     {%endfor%}
                   </select>
                 
-                  <label class="sr-only">sublocality</label>
-                  <select name="sublocality" class="form-control" required>
+                  <!-- <label class="sr-only">sublocality</label>
+                  <select name="sublocality" class="form-control">
                     <option value="">sublocality</option>
                     {% for key,value in sublocality_choices.items %}
                     <option value="{{key}}">{{value}}</option>
                     {%endfor%}
-                  </select>
+                  </select> -->
                   <label class="sr-only">State</label>
-                  <select name="state" class="form-control" required>
+                  <select name="state" class="form-control">
                     <option value="">State (All)</option>
                     {% for key,value in state_choices.items %}
                     <option value="{{key}}">{{value}}</option>
@@ -74,15 +74,15 @@ background-size: cover;">
                 </div>
                 <div class="form-group">
                   <label for="phone">phone</label>
-                  <input type="text" name="phone" class="form-control" >
+                  <input placeholder="(optional)"type="text" name="phone" class="form-control" >
                 </div>
                 <div class="form-group">
                   <label for="description">description</label>
-                  <input type="text" name="description" class="form-control" >
+                  <input placeholder="(optional)"type="text" name="description" class="form-control" >
                 </div>
                 <div class="form-group">
-                  <label for="zipcode">zipcode</label>
-                  <input type="text" name="zipcode" class="form-control" >
+                  <label for="zipcode">Postal code</label>
+                  <input placeholder="(optional)" type="text" name="zipcode" class="form-control" >
                 </div>
                 <input type="submit" value="Register" class="btn btn-secondary btn-block">
               </form>

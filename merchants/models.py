@@ -2,7 +2,7 @@ from django.db import models
 
 class Merchant(models.Model):
     name = models.CharField(max_length=120)
-    photo = models.ImageField(upload_to='photo/%Y/%m/%d')
+    photo = models.ImageField(upload_to='photo/merchants/%Y/%m/%d',null=True,blank=True)
     description = models.CharField(max_length=120,null=True,blank=True)
     city = models.CharField(max_length=120,null=True,blank=True)
     state = models.CharField(max_length=120,null=True,blank=True)

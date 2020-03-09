@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse,HttpResponseRedirect
 from django.contrib import messages, auth
 from django.contrib.auth.models import User ,Group
 from merchants.models import Merchant
@@ -40,7 +40,6 @@ def register(request):
         password = request.POST['password']
         password2 = request.POST['password2']
         city = request.POST['city']
-        sublocality = request.POST['sublocality']
         state = request.POST['state']
         phone = request.POST['phone']
         zipcode = request.POST['zipcode']
@@ -63,7 +62,7 @@ def register(request):
                     user.save()
                     if group:
                         user.groups.add(group)
-                    m = Merchant(name=first_name,photo=photo,email=email,city=city,state=state,sublocality=sublocality_choices[sublocality],phone=phone,zipcode=zipcode,description=description)
+                    m = Merchant(name=first_name,photo=photo,email=email,city=city,state=state,phone=phone,zipcode=zipcode,description=description)
                     m.save()
                     
                     # login after registeration
@@ -92,31 +91,36 @@ def logout(request):
 def dashboard(request):
     print(request.user.username)
     if request.user.is_authenticated:
-        m = Merchant.objects.get(name__icontains=request.user.first_name)
-        print(m)
-        l = Listing.objects.filter(merchant__name__icontains=request.user.first_name)
-        context = {
-        'merchant':m,
-        'listings':l,
-        'category_choices':category_choices
-        }
-    if request.method=='POST':
-        photo = request.FILES['myfile']
-        name = request.POST['name']
-        category = request.POST['category']
-        brand=request.POST['brand']
-        description=request.POST['description']
-        oldprice=request.POST['oldprice']
-        newprice=request.POST['newprice']
-        qty = request.POST['qty']
-        link = request.POST['link']
-        if not oldprice:
-            oldprice=None
-        if not newprice:
-            newprice = None
-        if not qty:
-            qty=None
-        
-        listing = Listing(merchant=m,name=name,photo=photo,category=category_choices[category],brand=brand,description=description,oldprice=oldprice,newprice=newprice,qty=qty,link=link)
-        listing.save()
+        if request.user.is_superuser:
+            return HttpResponseRedirect(reverse('admin:index'))
+        else:    
+            m = Merchant.objects.get(email=request.user.email)
+            print(m)
+            l = Listing.objects.filter(merchant__email__iexact=request.user.email)
+            context = {
+            'merchant':m,
+            'listings':l,
+            'category_choices':category_choices
+            }
+        if request.method=='POST':
+            photo = request.FILES.get('myfile')
+            name = request.POST.get('name')
+            category = request.POST.get('category')
+            brand=request.POST.get('brand')
+            description=request.POST.get('description')
+            oldprice=request.POST.get('oldprice')
+            newprice=request.POST.get('newprice')
+            qty = request.POST.get('qty')
+            link = request.POST.get('link')
+            if not oldprice:
+                oldprice=None
+            if not newprice:
+                newprice = None
+            if not qty:
+                qty=None
+            
+            listing = Listing(merchant=m,name=name,photo=photo,category=category_choices[category],brand=brand,description=description,oldprice=oldprice,newprice=newprice,qty=qty,link=link)
+            listing.save()
+    else:
+        return redirect('login')
     return render(request, 'accounts/dashboard.html',context)

@@ -164,10 +164,10 @@
               <input type="text" name="name" class="form-control" value="" required> 
             </div>
             <div class="form-group">
-              <input type="file" name="myfile"required>
+              <input type="file" name="myfile">
               <button type="submit">Upload</button>
             </div>
-              <select name="category" class="form-control" required >
+              <select name="category" class="form-control" >
                 <option value="" required >category (All)</option>
                 {% for key,value in category_choices.items %}
                 <option value="{{key}}">{{value}}</option>
