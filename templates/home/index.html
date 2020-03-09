@@ -51,13 +51,13 @@
         {% if listings %}
         {% for listing in listings %}
         {% if listing.photo %}
-        <div class="card mb-4 text-white bg-dark" style="width:18rem;background-color: #001231;">
-          <div class="card-overlay">
-            <h2>{%if listing.newprice %}
+            <div class="card text-white bg-dark" style="width:18rem;background-color: #001231;">
+            <div class="card-overlay">
+        {%if listing.newprice %}    <h2>
               <span class="badge badge-dark text-white">₹{{ listing.newprice | intcomma }}</span>
-              {%else%}
+        {%else%}
               <span class="badge badge-dark text-white">SALE</span>
-              {%endif%}
+        {%endif%}
             </h2></div>
             <img class="card-img-top" src="{{listing.photo.url}}" alt="Card image cap">
             <div class="card-body" >
@@ -71,49 +71,53 @@
             </ul>
             <div class="card-body">
               <a href="{% url 'listing' listing.id %}" style="border-color: white;color:white" class="btn btn-outline-primary">More Info</a>
-              {% if listing.link %}
+        {% if listing.link %}
               <a href="https://{{listing.link}}" style="border-color: white;color:white" class="btn btn-outline-primary">Visit Link</a>
-              {% endif %}  
+        {% endif %}  
             </div>
-          </div>
-          {% else%}
-        <div class="card text-white bg-danger mb-3 sm-3" style="width:18rem;background-color: black;">
-          <div class="card-overlay">
-            <h2>{%if listing.newprice %}
-              <span class="badge badge-dark text-white">₹{{ listing.newprice | intcomma }}</span>
-               {%else%}
-               <span class="badge badge-dark text-white">SALE</span>
-              {%endif%}
-            </h2>
-          </div>
-          <div class="card-header"><h4 class="text">{{listing.name}}</h4></div>
-          <div class="card-body">
-            <h3 class="card-title">{{listing.merchant}}</h3>
-            <h4>{{listing.link| default:""}}</h4>
-             {{listing.merchant.city|default:""}},{{listing.merchant.state|default:""}}
-            <p class="card-text">
-            {{listing.description|default:""}}
-            <hr>
-              <div class="">
-             {{listing.posted | timesince }}</div>
-            </p>
-            
-            <a href="{% url 'listing' listing.id %}" style="border-color: white;color:white" class="btn btn-outline-primary">More Info</a>
-            {% if listing.link %}
-            <a href="https://{{listing.link}}" style="border-color: white;color:white" class="btn btn-outline-primary">Visit Link</a>
-            {% endif %}
-            {% endif%}
-          </div>
-        </div>
-        {%endif%}
+            </div>
 
+        {% else%}
+
+            <div class="card text-white bg-danger" style="width:18rem;background-color: black;">
+              <div class="card-overlay">
+                <h2>{%if listing.newprice %}
+                  <span class="badge badge-dark text-white">₹{{ listing.newprice | intcomma }}</span>
+                  {%else%}
+                  <span class="badge badge-dark text-white">SALE</span>
+                  {%endif%}
+                </h2>
+              </div>
+              <div class="card-header"><h4 class="text">{{listing.name}}</h4></div>
+              <div class="card-body">
+                <h3 class="card-title">{{listing.merchant}}</h3>
+                <h4>{{listing.link| default:""}}</h4>
+                {{listing.merchant.city|default:""}},{{listing.merchant.state|default:""}}
+                <p class="card-text">
+                {{listing.description|default:""}}
+                <hr>
+                  <div class="">
+                {{listing.posted | timesince }}</div>
+                </p>
+                
+                <a href="{% url 'listing' listing.id %}" style="border-color: white;color:white" class="btn btn-outline-primary">More Info</a>
+                {% if listing.link %}
+                <a href="https://{{listing.link}}" style="border-color: white;color:white" class="btn btn-outline-primary">Visit Link</a>
+                {% endif %}
+
+              </div>
+            </div>
+
+
+        {% endif%}
+        
         {% endfor %}
         
         {%else%}
-
-         <div class='col-md-12'>
-         <p>No Deals Available</p>
-         </div>
+              <div class='col-md-12'>
+              <p>No Deals Available</p>
+              </div>
+        {%endif%}
 
     </div>
   </div>
