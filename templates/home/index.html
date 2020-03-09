@@ -105,73 +105,18 @@
             {% endif%}
           </div>
         </div>
+        {%endif%}
 
-        <!-- <div class="row">
-          <div class="col-md-6 col-lg-2 mb-4">
-        <div class="card listing-preview">
-          <div class="card-img-overlay">
-            {%if listing.newprice %}
-              <h2>
-              <span class="badge badge-secondary text-white">₹{{listing.newprice | intcomma }}</span>
-            </h2>
-            {%else%}
-                 <span class="badge badge-secondary text-white">SALE</span>
-                {%endif%}
-              </h2>
-            </div>
-
-            
-            <div class="card-body">
-              <div class="listing-heading text-center">
-                <h4 class="text-primary">{{listing.name}}</h4>
-                <p>
-                  <i class="fas fa-map-marker text-secondary">&nbsp;</i>{{listing.merchant.sublocality|default:""}}</p>
-              </div>
-              <hr>
-              <div class="row py-2 text-secondary">
-                <div class="col-6">
-                  {%if listing.qty %}
-                  <i class=""></i> Qty:{{listing.qty|default:""}} left
-                  {%else%}
-                  <i class=""></i>
-                {%endif%}
-                <i class=""></i> {% if listing.is_valid %}
-                                   <p>Valid offer</p>
-                                   {% else %}
-                                   <p>Invalid offer</p>
-                                   {% endif %}
-              </div>
-                <div class="col-6">
-                  <i class=""></i> {{listing.merchant.city|default:""}},{{listing.merchant.state|default:""}}</div>
-              </div>
-              <div class="row py-2 text-secondary">
-                <div class="col-12">
-                  <i class=""></i>{{listing.description|default:""}}</div>
-              </div>
-              <hr>
-              <div class="row py-2 text-secondary">
-                <div class="col-12">
-                  <i class="fas fa-user"></i>&nbsp; {{listing.merchant}}</div>
-              </div>
-              <div class="row text-secondary pb-2">
-                <div class="col-6">
-                  <i class="fas fa-clock"></i> &nbsp; {{listing.posted | timesince }}</div>
-              </div>
-              <hr>
-              <a href="{% url 'listing' listing.id %}" class="btn btn-primary btn-block">More Info</a>
-            </div>
-          </div>
-        </div>     -->
         {% endfor %}
-
+        
         {%else%}
 
          <div class='col-md-12'>
          <p>No Deals Available</p>
          </div>
 
-        {%endif%}
-    </div></div>
+    </div>
+  </div>
   </section>
 
  
